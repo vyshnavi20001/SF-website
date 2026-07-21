@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shirisha Fragrance & Co.</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #F8F4EC;
+    color: #2B2B2B;
+  }
+
+  /* ===== NAVBAR ===== */
+  .glass-nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 92%;
+    max-width: 780px;
+    padding: 10px 10px 10px 28px;
+    border-radius: 999px;
+    background: rgba(248, 244, 236, 0.65);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(200, 169, 106, 0.35);
+    box-shadow:
+      0 8px 32px rgba(46, 74, 63, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .brand {
+    font-weight: 600;
+    font-size: 16px;
+    color: #2E4A3F;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .nav-links { display: flex; gap: 4px; }
+
+  .nav-btn {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2B2B2B;
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.15s ease;
+  }
+
+  .nav-btn:hover { background: rgba(200, 169, 106, 0.18); color: #2E4A3F; }
+  .nav-btn:active { transform: scale(0.96); }
+
+  /* ===== SECTION (full-screen scroll-snap card) ===== */
+  .panel {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px;
+    position: relative;
+  }
+
+  /* fade+rise reveal, triggered by JS adding .in-view */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1.in-view { transition-delay: 0.1s; }
+  .reveal-delay-2.in-view { transition-delay: 0.2s; }
+  .reveal-delay-3.in-view { transition-delay: 0.3s; }
+
+  /* ===== HERO PANEL ===== */
+  .fixed-logo {
+    position: fixed;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(180px, 28vmin, 420px);
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .fixed-logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .edge-flower {
+    position: absolute;
+    top: 42%;
+    transform: translateY(-50%);
+    width: clamp(50px, 11vmin, 190px);
+    opacity: 0.75;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .edge-flower.left {
+    left: clamp(-10px, 2vw, 40px);
+  }
+
+  .edge-flower.right {
+    right: clamp(-10px, 2vw, 40px);
+  }
+
+  @media (max-width: 600px) {
+    .edge-flower {
+      opacity: 0.4;
+    }
+  }
+
+  .hero-panel h1 {
+    font-size: 42px;
+    font-weight: 600;
+    color: #2E4A3F;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    margin-top: clamp(140px, 22vmin, 300px);
+    max-width: 640px;
+  }
+
+  .hero-panel p {
+    font-size: 17px;
+    color: #6B6B6B;
+    letter-spacing: 0.01em;
+  }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #C8A96A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: bob 2s ease-in-out infinite;
+  }
+
+  .scroll-cue span {
+    width: 1px;
+    height: 28px;
+    background: #C8A96A;
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, 8px); }
+  }
+
+  /* ===== STORY PANEL ===== */
+  .brand-story h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2E4A3F;
+    letter-spacing: -0.01em;
+    margin-bottom: 20px;
+  }
+
+  .brand-story p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #6B6B6B;
+    max-width: 560px;
+  }
+
+  /* ===== PRODUCTS PANEL ===== */
+  .products-panel {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    padding: 120px 24px 100px;
+    display: block;
+  }
+
+  .products-title {
+    font-size: 26px;
+    font-weight: 600;
+    color: #2E4A3F;
+    text-align: center;
+    letter-spacing: -0.01em;
+    margin-bottom: 40px;
+  }
+
+  .products-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .product-card {
+    background: #FFFFFF;
+    border: 1px solid #E5DCCB;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 28px rgba(46, 74, 63, 0.1);
+  }
+
+  .product-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: #F8F4EC;
+  }
+
+  .product-info { padding: 16px 18px 20px; }
+
+  .product-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #2B2B2B;
+    margin-bottom: 6px;
+  }
+
+  .product-price {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2E4A3F;
+  }
+
+  /* ===== CONTACT MODAL ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(43, 43, 43, 0.35);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-box {
+    background: #FFFFFF;
+    border: 1px solid #E5DCCB;
+    border-radius: 20px;
+    padding: 32px 28px;
+    width: 90%;
+    max-width: 340px;
+    text-align: center;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 20px 50px rgba(46, 74, 63, 0.15);
+  }
+
+  .modal-overlay.open .modal-box {
+    transform: translateY(0) scale(1);
+  }
+
+  .modal-box h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2E4A3F;
+    margin-bottom: 6px;
+  }
+
+  .modal-box p {
+    font-size: 14px;
+    color: #6B6B6B;
+    margin-bottom: 24px;
+  }
+
+  .modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 13px 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s ease, filter 0.2s ease;
+  }
+
+  .contact-option:hover {
+    filter: brightness(1.05);
+  }
+
+  .contact-option:active {
+    transform: scale(0.97);
+  }
+
+  .contact-option.whatsapp {
+    background: #2E4A3F;
+    color: #FFFFFF;
+  }
+
+  .contact-option.email {
+    background: #F8F4EC;
+    color: #2E4A3F;
+    border: 1px solid #E5DCCB;
+  }
+
+  .modal-close {
+    margin-top: 20px;
+    background: none;
+    border: none;
+    font-size: 13px;
+    color: #6B6B6B;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 480px) {
+    .glass-nav { padding: 8px 8px 8px 18px; gap: 12px; }
+    .brand { font-size: 13px; }
+    .nav-btn { padding: 8px 12px; font-size: 13px; }
+    .hero-panel h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="glass-nav">
+  <span class="brand">Shirisha Fragrance & Co.</span>
+  <div class="nav-links">
+    <button class="nav-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Products</button>
+    <button class="nav-btn" onclick="openContactModal()">Contact</button>
+  </div>
+</nav>
+
+<div class="fixed-logo" id="fixedLogo">
+  <img src="logo.png" alt="Shirisha Fragrance & Co. logo">
+</div>
+
+<!-- PANEL 1: LOGO + CAPTION -->
+<section class="panel hero-panel">
+  <img src="flower-left.png" alt="" class="edge-flower left">
+  <img src="flower-right.png" alt="" class="edge-flower right">
+
+  <h1 class="reveal">Experience the Art of Fragrance</h1>
+  <p class="reveal reveal-delay-1">Premium Organic Incense Collection</p>
+
+  <div class="scroll-cue"><span></span>Scroll</div>
+</section>
+
+<!-- PANEL 2: BRAND STORY -->
+<section class="panel brand-story">
+  <h2 class="reveal">Our Story</h2>
+  <p class="reveal reveal-delay-1">Shirisha Fragrance & Co. was born from a love of traditional scent-making, blending organic ingredients with time-honoured craft. Every stick is hand-rolled in small batches, carrying the warmth and calm of a ritual passed down through generations.</p>
+</section>
+
+<!-- PANEL 3: FEATURED COLLECTION -->
+<section class="products-panel" id="products">
+  <h2 class="products-title reveal">Featured Collection</h2>
+  <div class="products-grid">
+
+    <div class="product-card reveal">
+      <img src="https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg" alt="Product name">
+      <div class="product-info">
+        <div class="product-title">Sandalwood Bliss</div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-1">
+      <img src="https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg" alt="Product name">
+      <div class="product-info">
+        <div class="product-title">Rose Attar</div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-2">
+      <img src="https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg" alt="Product name">
+      <div class="product-info">
+        <div class="product-title">Jasmine Nights</div>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-delay-3">
+      <img src="https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg" alt="Product name">
+      <div class="product-info">
+        <div class="product-title">Musk & Amber</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal-box">
+    <h3>Get in Touch</h3>
+    <p>Reach out to us directly</p>
+    <div class="modal-actions">
+      <a class="contact-option whatsapp" href="https://wa.me/919999999999" target="_blank" rel="noopener">
+        WhatsApp Us
+      </a>
+      <a class="contact-option email" href="mailto:hello@shirishafragrance.com">
+        Email Us
+      </a>
+    </div>
+    <button class="modal-close" onclick="closeContactModal()">Close</button>
+  </div>
+</div>
+
+<script>
+  function openContactModal() {
+    document.getElementById('contactModal').classList.add('open');
+  }
+  function closeContactModal() {
+    document.getElementById('contactModal').classList.remove('open');
+  }
+  // close when clicking outside the box
+  document.getElementById('contactModal').addEventListener('click', function(e) {
+    if (e.target === this) closeContactModal();
+  });
+
+  // Fade the fixed centered logo as user scrolls, but never below 20% opacity
+  const fixedLogo = document.getElementById('fixedLogo');
+  const fadeDistance = window.innerHeight * 0.8; // fully faded to floor by 80% of one screen height
+
+  function updateLogoOpacity() {
+    const scrolled = window.scrollY;
+    const progress = Math.min(scrolled / fadeDistance, 1);
+    const opacity = 1 - progress * 0.8; // fades from 1.0 down to 0.2
+    fixedLogo.style.opacity = opacity;
+  }
+
+  window.addEventListener('scroll', updateLogoOpacity);
+  updateLogoOpacity();
+
+  // Reveal elements as they scroll into view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
