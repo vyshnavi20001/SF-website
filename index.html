@@ -5,369 +5,417 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shirisha Fragrance & Co.</title>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  html {
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-  }
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #F8F4EC;
-    color: #2B2B2B;
-  }
+html.no-snap {
+  scroll-snap-type: none;
+}
 
-  /* ===== NAVBAR ===== */
-  .glass-nav {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    width: 92%;
-    max-width: 780px;
-    padding: 10px 10px 10px 28px;
-    border-radius: 999px;
-    background: rgba(248, 244, 236, 0.65);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(200, 169, 106, 0.35);
-    box-shadow:
-      0 8px 32px rgba(46, 74, 63, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #ECE8E0;
+  color: #1A1A1A;
+}
 
-  .brand {
-    font-weight: 600;
-    font-size: 16px;
-    color: #2E4A3F;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-  }
+/* ===== NAVBAR ===== */
+.glass-nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 92%;
+  max-width: 780px;
+  padding: 10px 10px 10px 28px;
+  border-radius: 999px;
+  background: rgba(236, 232, 224, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(190, 161, 101, 0.35);
+  box-shadow:
+    0 8px 32px rgba(44, 70, 60, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
 
-  .nav-links { display: flex; gap: 4px; }
+.brand {
+  font-weight: 600;
+  font-size: 16px;
+  color: #2C4638;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-decoration: none;
+}
 
-  .nav-btn {
-    font-size: 14px;
-    font-weight: 500;
-    color: #2B2B2B;
-    background: transparent;
-    border: none;
-    border-radius: 999px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background 0.25s ease, color 0.25s ease, transform 0.15s ease;
-  }
+.nav-links { display: flex; gap: 4px; }
 
-  .nav-btn:hover { background: rgba(200, 169, 106, 0.18); color: #2E4A3F; }
-  .nav-btn:active { transform: scale(0.96); }
+.nav-btn {
+  font-size: 14px;
+  font-weight: 500;
+  color: #292929;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.15s ease;
+}
 
-  /* ===== SECTION (full-screen scroll-snap card) ===== */
-  .panel {
-    min-height: 100vh;
-    scroll-snap-align: start;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 120px 24px;
-    position: relative;
-  }
+.nav-btn:hover { background: rgba(190, 161, 101, 0.18); color: #2C4638; }
+.nav-btn:active { transform: scale(0.96); }
 
-  /* fade+rise reveal, triggered by JS adding .in-view */
-  .reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+/* ===== SECTION (full-screen scroll-snap card) ===== */
+.panel {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px;
+  position: relative;
+}
 
-  .reveal.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* fade+rise reveal, triggered by JS adding .in-view */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  .reveal-delay-1.in-view { transition-delay: 0.1s; }
-  .reveal-delay-2.in-view { transition-delay: 0.2s; }
-  .reveal-delay-3.in-view { transition-delay: 0.3s; }
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-  /* ===== HERO PANEL ===== */
-  .fixed-logo {
-    position: fixed;
-    top: 42%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: clamp(180px, 28vmin, 420px);
-    z-index: -1;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
+.reveal-delay-1.in-view { transition-delay: 0.1s; }
+.reveal-delay-2.in-view { transition-delay: 0.2s; }
+.reveal-delay-3.in-view { transition-delay: 0.3s; }
 
-  .fixed-logo img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+/* ===== HERO PANEL ===== */
+.fixed-logo {
+  position: fixed;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(180px, 28vmin, 420px);
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
 
+.fixed-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.edge-flower {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  width: clamp(50px, 11vmin, 190px);
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.edge-flower.left {
+  left: clamp(-10px, 2vw, 40px);
+}
+
+.edge-flower.right {
+  right: clamp(-10px, 2vw, 40px);
+}
+
+@media (max-width: 600px) {
   .edge-flower {
-    position: absolute;
-    top: 42%;
-    transform: translateY(-50%);
-    width: clamp(50px, 11vmin, 190px);
-    opacity: 0.75;
-    pointer-events: none;
-    z-index: 1;
+    opacity: 0.4;
   }
+}
 
-  .edge-flower.left {
-    left: clamp(-10px, 2vw, 40px);
-  }
+.hero-panel h1 {
+  font-size: clamp(22px, 4.8vw, 36px);
+  font-weight: 800;
+  color: #1E3730;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  margin-top: clamp(140px, 22vmin, 300px);
+  max-width: 90vw;
+  white-space: nowrap;
+}
 
-  .edge-flower.right {
-    right: clamp(-10px, 2vw, 40px);
-  }
+.hero-panel p {
+  font-size: 20px;
+  font-weight: 600;
+  color: #4A4A4A;
+  letter-spacing: 0.01em;
+}
 
-  @media (max-width: 600px) {
-    .edge-flower {
-      opacity: 0.4;
-    }
-  }
+.scroll-cue {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #BEA165;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: bob 2s ease-in-out infinite;
+}
 
-  .hero-panel h1 {
-    font-size: 42px;
-    font-weight: 600;
-    color: #2E4A3F;
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-    margin-top: clamp(140px, 22vmin, 300px);
-    max-width: 640px;
-  }
+.scroll-cue span {
+  width: 1px;
+  height: 28px;
+  background: #BEA165;
+}
 
-  .hero-panel p {
-    font-size: 17px;
-    color: #6B6B6B;
-    letter-spacing: 0.01em;
-  }
+@keyframes bob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 8px); }
+}
 
-  .scroll-cue {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #C8A96A;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    animation: bob 2s ease-in-out infinite;
-  }
+/* ===== STORY PANEL ===== */
+.brand-story h2 {
+  font-size: 34px;
+  font-weight: 800;
+  color: #1E3730;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
 
-  .scroll-cue span {
-    width: 1px;
-    height: 28px;
-    background: #C8A96A;
-  }
+.brand-story p {
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.8;
+  color: #4A4A4A;
+  max-width: 560px;
+}
 
-  @keyframes bob {
-    0%, 100% { transform: translate(-50%, 0); }
-    50% { transform: translate(-50%, 8px); }
-  }
+/* ===== PRODUCTS PAGE ===== */
+.products-page {
+  min-height: 100vh;
+  padding: 160px 24px 100px;
+  display: block;
+}
 
-  /* ===== STORY PANEL ===== */
-  .brand-story h2 {
-    font-size: 28px;
-    font-weight: 600;
-    color: #2E4A3F;
-    letter-spacing: -0.01em;
-    margin-bottom: 20px;
-  }
+.products-eyebrow {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #BEA165;
+  margin-bottom: 10px;
+}
 
-  .brand-story p {
-    font-size: 17px;
-    line-height: 1.8;
-    color: #6B6B6B;
-    max-width: 560px;
-  }
+.products-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1E3730;
+  text-align: center;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
 
-  /* ===== PRODUCTS PANEL ===== */
-  .products-panel {
-    min-height: 100vh;
-    scroll-snap-align: start;
-    padding: 120px 24px 100px;
-    display: block;
-  }
+.products-subtitle {
+  font-size: 17px;
+  font-weight: 500;
+  color: #4A4A4A;
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
 
-  .products-title {
-    font-size: 26px;
-    font-weight: 600;
-    color: #2E4A3F;
-    text-align: center;
-    letter-spacing: -0.01em;
-    margin-bottom: 40px;
-  }
+.products-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
 
-  .products-grid {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-  }
+.product-card {
+  background: #FFFFFF;
+  border: 1px solid #DAD1C1;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
 
-  .product-card {
-    background: #FFFFFF;
-    border: 1px solid #E5DCCB;
-    border-radius: 16px;
-    overflow: hidden;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 28px rgba(44, 70, 60, 0.1);
+}
 
-  .product-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 28px rgba(46, 74, 63, 0.1);
-  }
+.product-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #ECE8E0;
+}
 
-  .product-card img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    background: #F8F4EC;
-  }
+.product-info { padding: 16px 18px 20px; }
 
-  .product-info { padding: 16px 18px 20px; }
+.product-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 6px;
+}
 
-  .product-title {
-    font-size: 15px;
-    font-weight: 500;
-    color: #2B2B2B;
-    margin-bottom: 6px;
-  }
+.product-price {
+  font-size: 17px;
+  font-weight: 800;
+  color: #1E3730;
+}
 
-  .product-price {
-    font-size: 15px;
-    font-weight: 600;
-    color: #2E4A3F;
-  }
+@media (max-width: 600px) {
+  .products-grid { grid-template-columns: 1fr; }
+}
 
-  /* ===== CONTACT MODAL ===== */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    background: rgba(43, 43, 43, 0.35);
-    backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
+/* ===== MODALS (contact + products dialog) ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(41, 41, 41, 0.35);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
 
-  .modal-overlay.open {
-    opacity: 1;
-    pointer-events: auto;
-  }
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-  .modal-box {
-    background: #FFFFFF;
-    border: 1px solid #E5DCCB;
-    border-radius: 20px;
-    padding: 32px 28px;
-    width: 90%;
-    max-width: 340px;
-    text-align: center;
-    transform: translateY(20px) scale(0.97);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 20px 50px rgba(46, 74, 63, 0.15);
-  }
+.modal-box {
+  background: #FFFFFF;
+  border: 1px solid #DAD1C1;
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 90%;
+  max-width: 340px;
+  text-align: center;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 20px 50px rgba(44, 70, 60, 0.15);
+}
 
-  .modal-overlay.open .modal-box {
-    transform: translateY(0) scale(1);
-  }
+.modal-overlay.open .modal-box {
+  transform: translateY(0) scale(1);
+}
 
-  .modal-box h3 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #2E4A3F;
-    margin-bottom: 6px;
-  }
+.modal-box h3 {
+  font-size: 23px;
+  font-weight: 800;
+  color: #1E3730;
+  margin-bottom: 6px;
+}
 
-  .modal-box p {
-    font-size: 14px;
-    color: #6B6B6B;
-    margin-bottom: 24px;
-  }
+.modal-box p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #4A4A4A;
+  margin-bottom: 24px;
+}
 
-  .modal-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-  .contact-option {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 13px 20px;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    border: none;
-    transition: transform 0.15s ease, filter 0.2s ease;
-  }
+.contact-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s ease, filter 0.2s ease;
+}
 
-  .contact-option:hover {
-    filter: brightness(1.05);
-  }
+.contact-option:hover {
+  filter: brightness(1.05);
+}
 
-  .contact-option:active {
-    transform: scale(0.97);
-  }
+.contact-option:active {
+  transform: scale(0.97);
+}
 
-  .contact-option.whatsapp {
-    background: #2E4A3F;
-    color: #FFFFFF;
-  }
+.contact-option.whatsapp {
+  background: #2C4638;
+  color: #FFFFFF;
+}
 
-  .contact-option.email {
-    background: #F8F4EC;
-    color: #2E4A3F;
-    border: 1px solid #E5DCCB;
-  }
+.contact-option.email {
+  background: #ECE8E0;
+  color: #2C4638;
+  border: 1px solid #DAD1C1;
+}
 
-  .modal-close {
-    margin-top: 20px;
-    background: none;
-    border: none;
-    font-size: 13px;
-    color: #6B6B6B;
-    cursor: pointer;
-    text-decoration: underline;
-  }
+.contact-option.organic {
+  background: #2C4638;
+  color: #FFFFFF;
+}
 
-  @media (max-width: 480px) {
-    .glass-nav { padding: 8px 8px 8px 18px; gap: 12px; }
-    .brand { font-size: 13px; }
-    .nav-btn { padding: 8px 12px; font-size: 13px; }
-    .hero-panel h1 { font-size: 30px; }
-  }
+.contact-option.inorganic {
+  background: #ECE8E0;
+  color: #2C4638;
+  border: 1px solid #DAD1C1;
+}
+
+.modal-close {
+  margin-top: 20px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4A4A4A;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .glass-nav { padding: 8px 8px 8px 18px; gap: 12px; }
+  .brand { font-size: 13px; }
+  .nav-btn { padding: 8px 12px; font-size: 13px; }
+}
+
 </style>
 </head>
 <body>
@@ -375,8 +423,8 @@
 <nav class="glass-nav">
   <span class="brand">Shirisha Fragrance & Co.</span>
   <div class="nav-links">
-    <button class="nav-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Products</button>
-    <button class="nav-btn" onclick="openContactModal()">Contact</button>
+    <button class="nav-btn" onclick="openModal('productsModal')">Products</button>
+    <button class="nav-btn" onclick="openModal('contactModal')">Contact</button>
   </div>
 </nav>
 
@@ -397,45 +445,28 @@
 
 <!-- PANEL 2: BRAND STORY -->
 <section class="panel brand-story">
-  <h2 class="reveal">Our Story</h2>
-  <p class="reveal reveal-delay-1">Shirisha Fragrance & Co. was born from a love of traditional scent-making, blending organic ingredients with time-honoured craft. Every stick is hand-rolled in small batches, carrying the warmth and calm of a ritual passed down through generations.</p>
+  <h2 class="reveal">The House of Shirisha</h2>
+  <p class="reveal reveal-delay-1">At Shirisha Fragrance & Co., we don't simply create incense—we curate experiences through fragrance. Every collection reflects our pursuit of elegance, purity, and timeless craftsmanship. Inspired by India's rich aromatic heritage and created for modern living, our fragrances are designed to evoke emotion, elevate everyday moments, and become a signature presence in every space they touch.</p>
 </section>
 
-<!-- PANEL 3: FEATURED COLLECTION -->
-<section class="products-panel" id="products">
-  <h2 class="products-title reveal">Featured Collection</h2>
-  <div class="products-grid">
+<!-- PANEL: OUR ESSENCE & JOURNEY -->
+<section class="panel brand-story">
+  <h2 class="reveal">Our Essence & Journey</h2>
+  <p class="reveal reveal-delay-1">Every remarkable fragrance begins with purpose. For four years, we pursued the perfect balance of nature, artistry, and precision, refining every formulation with uncompromising care. The result is a collection that reflects the timeless elegance, authenticity, and quiet luxury that define Shirisha Fragrance & Co.</p>
+</section>
 
-    <div class="product-card reveal">
-      <img src="https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg" alt="Product name">
-      <div class="product-info">
-        <div class="product-title">Sandalwood Bliss</div>
-      </div>
+<!-- PRODUCTS DIALOG: choose a collection -->
+<div class="modal-overlay" id="productsModal">
+  <div class="modal-box">
+    <h3>Explore Our Collections</h3>
+    <p>Choose a category to continue</p>
+    <div class="modal-actions">
+      <a class="contact-option organic" href="products-organic.html">Organic Collection</a>
+      <a class="contact-option inorganic" href="products-inorganic.html">Eco Collection</a>
     </div>
-
-    <div class="product-card reveal reveal-delay-1">
-      <img src="https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg" alt="Product name">
-      <div class="product-info">
-        <div class="product-title">Rose Attar</div>
-      </div>
-    </div>
-
-    <div class="product-card reveal reveal-delay-2">
-      <img src="https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg" alt="Product name">
-      <div class="product-info">
-        <div class="product-title">Jasmine Nights</div>
-      </div>
-    </div>
-
-    <div class="product-card reveal reveal-delay-3">
-      <img src="https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg" alt="Product name">
-      <div class="product-info">
-        <div class="product-title">Musk & Amber</div>
-      </div>
-    </div>
-
+    <button class="modal-close" onclick="closeModal('productsModal')">Close</button>
   </div>
-</section>
+</div>
 
 <!-- CONTACT MODAL -->
 <div class="modal-overlay" id="contactModal">
@@ -450,22 +481,39 @@
         Email Us
       </a>
     </div>
-    <button class="modal-close" onclick="closeContactModal()">Close</button>
+    <button class="modal-close" onclick="closeModal('contactModal')">Close</button>
   </div>
 </div>
 
 <script>
-  function openContactModal() {
-    document.getElementById('contactModal').classList.add('open');
-  }
-  function closeContactModal() {
-    document.getElementById('contactModal').classList.remove('open');
-  }
-  // close when clicking outside the box
-  document.getElementById('contactModal').addEventListener('click', function(e) {
-    if (e.target === this) closeContactModal();
-  });
+// Generic modal open/close — works for any .modal-overlay by id
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
 
+// Close any open modal when clicking outside its box
+document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
+  overlay.addEventListener('click', function (e) {
+    if (e.target === this) closeModal(this.id);
+  });
+});
+
+// Reveal elements as they scroll into view
+const shirishaRevealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.reveal').forEach(el => shirishaRevealObserver.observe(el));
+
+</script>
+<script>
   // Fade the fixed centered logo as user scrolls, but never below 20% opacity
   const fixedLogo = document.getElementById('fixedLogo');
   const fadeDistance = window.innerHeight * 0.8; // fully faded to floor by 80% of one screen height
@@ -479,17 +527,6 @@
 
   window.addEventListener('scroll', updateLogoOpacity);
   updateLogoOpacity();
-
-  // Reveal elements as they scroll into view
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-      }
-    });
-  }, { threshold: 0.2 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
 </body>
