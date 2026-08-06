@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" class="no-snap">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eco Collection — Shirisha Fragrance & Co.</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+html.no-snap {
+  scroll-snap-type: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #ECE8E0;
+  color: #1A1A1A;
+}
+
+/* ===== NAVBAR ===== */
+.glass-nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 92%;
+  max-width: 780px;
+  padding: 10px 10px 10px 28px;
+  border-radius: 999px;
+  background: rgba(236, 232, 224, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(190, 161, 101, 0.35);
+  box-shadow:
+    0 8px 32px rgba(44, 70, 60, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.brand {
+  font-weight: 600;
+  font-size: 16px;
+  color: #2C4638;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-links { display: flex; gap: 4px; }
+
+.nav-btn {
+  font-size: 14px;
+  font-weight: 500;
+  color: #292929;
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.15s ease;
+}
+
+.nav-btn:hover { background: rgba(190, 161, 101, 0.18); color: #2C4638; }
+.nav-btn:active { transform: scale(0.96); }
+
+/* ===== SECTION (full-screen scroll-snap card) ===== */
+.panel {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px;
+  position: relative;
+}
+
+/* fade+rise reveal, triggered by JS adding .in-view */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1.in-view { transition-delay: 0.1s; }
+.reveal-delay-2.in-view { transition-delay: 0.2s; }
+.reveal-delay-3.in-view { transition-delay: 0.3s; }
+
+/* ===== HERO PANEL ===== */
+.fixed-logo {
+  position: fixed;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(180px, 28vmin, 420px);
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.fixed-logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.edge-flower {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  width: clamp(50px, 11vmin, 190px);
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.edge-flower.left {
+  left: clamp(-10px, 2vw, 40px);
+}
+
+.edge-flower.right {
+  right: clamp(-10px, 2vw, 40px);
+}
+
+@media (max-width: 600px) {
+  .edge-flower {
+    opacity: 0.4;
+  }
+}
+
+.hero-panel h1 {
+  font-size: clamp(22px, 4.8vw, 36px);
+  font-weight: 800;
+  color: #1E3730;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  margin-top: clamp(140px, 22vmin, 300px);
+  max-width: 90vw;
+  white-space: nowrap;
+}
+
+.hero-panel p {
+  font-size: 20px;
+  font-weight: 600;
+  color: #4A4A4A;
+  letter-spacing: 0.01em;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #BEA165;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: bob 2s ease-in-out infinite;
+}
+
+.scroll-cue span {
+  width: 1px;
+  height: 28px;
+  background: #BEA165;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 8px); }
+}
+
+/* ===== STORY PANEL ===== */
+.brand-story h2 {
+  font-size: 34px;
+  font-weight: 800;
+  color: #1E3730;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+
+.brand-story p {
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.8;
+  color: #4A4A4A;
+  max-width: 560px;
+}
+
+/* ===== PRODUCTS PAGE ===== */
+.products-page {
+  min-height: 100vh;
+  padding: 160px 24px 100px;
+  display: block;
+}
+
+.products-eyebrow {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #BEA165;
+  margin-bottom: 10px;
+}
+
+.products-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1E3730;
+  text-align: center;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+
+.products-subtitle {
+  font-size: 17px;
+  font-weight: 500;
+  color: #4A4A4A;
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+.products-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.product-card {
+  background: #FFFFFF;
+  border: 1px solid #DAD1C1;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 28px rgba(44, 70, 60, 0.1);
+}
+
+.product-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #ECE8E0;
+}
+
+.product-info { padding: 16px 18px 20px; }
+
+.product-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 6px;
+}
+
+.product-price {
+  font-size: 17px;
+  font-weight: 800;
+  color: #1E3730;
+}
+
+@media (max-width: 600px) {
+  .products-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== MODALS (contact + products dialog) ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(41, 41, 41, 0.35);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: #FFFFFF;
+  border: 1px solid #DAD1C1;
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 90%;
+  max-width: 340px;
+  text-align: center;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 20px 50px rgba(44, 70, 60, 0.15);
+}
+
+.modal-overlay.open .modal-box {
+  transform: translateY(0) scale(1);
+}
+
+.modal-box h3 {
+  font-size: 23px;
+  font-weight: 800;
+  color: #1E3730;
+  margin-bottom: 6px;
+}
+
+.modal-box p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #4A4A4A;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s ease, filter 0.2s ease;
+}
+
+.contact-option:hover {
+  filter: brightness(1.05);
+}
+
+.contact-option:active {
+  transform: scale(0.97);
+}
+
+.contact-option.whatsapp {
+  background: #2C4638;
+  color: #FFFFFF;
+}
+
+.contact-option.email {
+  background: #ECE8E0;
+  color: #2C4638;
+  border: 1px solid #DAD1C1;
+}
+
+.contact-option.organic {
+  background: #2C4638;
+  color: #FFFFFF;
+}
+
+.contact-option.inorganic {
+  background: #ECE8E0;
+  color: #2C4638;
+  border: 1px solid #DAD1C1;
+}
+
+.modal-close {
+  margin-top: 20px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4A4A4A;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .glass-nav { padding: 8px 8px 8px 18px; gap: 12px; }
+  .brand { font-size: 13px; }
+  .nav-btn { padding: 8px 12px; font-size: 13px; }
+}
+
+
+/* ===== PRODUCT CARD (clickable) ===== */
+.product-card {
+  cursor: pointer;
+}
+
+.product-price {
+  margin-top: 2px;
+}
+
+.products-status {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: #4A4A4A;
+  grid-column: 1 / -1;
+  padding: 40px 0;
+}
+
+/* ===== PRODUCT DETAIL MODAL ===== */
+.product-modal-box {
+  max-width: 420px;
+  padding: 0 0 28px;
+  overflow: hidden;
+  text-align: left;
+}
+
+.product-modal-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  background: #ECE8E0;
+}
+
+.product-modal-body {
+  padding: 24px 26px 0;
+  text-align: left;
+}
+
+.product-modal-body h3 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #1E3730;
+  margin-bottom: 4px;
+  text-align: left;
+}
+
+.product-modal-price {
+  font-size: 19px;
+  font-weight: 800;
+  color: #BEA165;
+  margin-bottom: 14px;
+}
+
+.product-modal-body p {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: #4A4A4A;
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+.product-modal-body .modal-actions {
+  margin-bottom: 4px;
+}
+
+.product-modal-body .modal-close {
+  display: block;
+  text-align: center;
+  width: 100%;
+}
+
+</style>
+</head>
+<body>
+
+<nav class="glass-nav">
+  <a class="brand" href="index.html">Shirisha Fragrance & Co.</a>
+  <div class="nav-links">
+    <button class="nav-btn" onclick="openModal('productsModal')">Products</button>
+    <button class="nav-btn" onclick="openModal('contactModal')">Contact</button>
+  </div>
+</nav>
+
+<section class="products-page">
+  <span class="products-eyebrow reveal in-view">Eco-Conscious</span>
+  <h2 class="products-title reveal in-view">Eco Collection</h2>
+  <p class="products-subtitle reveal in-view">Our Eco Collection is thoughtfully formulated using minimal synthetic ingredients while preserving a rich and long-lasting fragrance experience. Designed for everyday use, it offers the perfect balance of quality, performance, and environmental consciousness.</p>
+
+  <div class="products-grid" id="productsGrid">
+    <div class="products-status">Loading products&hellip;</div>
+  </div>
+</section>
+
+<!-- PRODUCT DETAIL DIALOG -->
+<div class="modal-overlay" id="productDetailModal">
+  <div class="modal-box product-modal-box">
+    <img class="product-modal-image" id="productModalImage" src="" alt="">
+    <div class="product-modal-body">
+      <h3 id="productModalName"></h3>
+      <div class="product-modal-price" id="productModalPrice"></div>
+      <p id="productModalDescription"></p>
+      <div class="modal-actions">
+        <a class="contact-option whatsapp" id="productModalBuyBtn" href="#" target="_blank" rel="noopener">
+          Buy on WhatsApp
+        </a>
+      </div>
+      <button class="modal-close" onclick="closeModal('productDetailModal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS DIALOG: choose a collection -->
+<div class="modal-overlay" id="productsModal">
+  <div class="modal-box">
+    <h3>Explore Our Collections</h3>
+    <p>Choose a category to continue</p>
+    <div class="modal-actions">
+      <a class="contact-option organic" href="products-organic.html">Organic Collection</a>
+      <a class="contact-option inorganic" href="products-inorganic.html">Eco Collection</a>
+    </div>
+    <button class="modal-close" onclick="closeModal('productsModal')">Close</button>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal-box">
+    <h3>Get in Touch</h3>
+    <p>Reach out to us directly</p>
+    <div class="modal-actions">
+      <a class="contact-option whatsapp" href="https://wa.me/919999999999" target="_blank" rel="noopener">
+        WhatsApp Us
+      </a>
+      <a class="contact-option email" href="mailto:hello@shirishafragrance.com">
+        Email Us
+      </a>
+    </div>
+    <button class="modal-close" onclick="closeModal('contactModal')">Close</button>
+  </div>
+</div>
+
+<script>
+// Generic modal open/close — works for any .modal-overlay by id
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close any open modal when clicking outside its box
+document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
+  overlay.addEventListener('click', function (e) {
+    if (e.target === this) closeModal(this.id);
+  });
+});
+
+// Reveal elements as they scroll into view
+const shirishaRevealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.reveal').forEach(el => shirishaRevealObserver.observe(el));
+
+
+// ===== Product loading & detail dialog =====
+const PRODUCT_CATEGORY = 'eco';
+const WHATSAPP_NUMBER = '919999999999';
+
+const productsGrid = document.getElementById('productsGrid');
+let PRODUCTS_BY_ID = {};
+
+fetch('products.json')
+  .then(function (res) {
+    if (!res.ok) throw new Error('Failed to load products.json');
+    return res.json();
+  })
+  .then(function (allProducts) {
+    const items = allProducts.filter(function (p) { return p.category === PRODUCT_CATEGORY; });
+
+    if (items.length === 0) {
+      productsGrid.innerHTML = '<div class="products-status">No products found.</div>';
+      return;
+    }
+
+    productsGrid.innerHTML = '';
+    items.forEach(function (product, i) {
+      PRODUCTS_BY_ID[product.id] = product;
+
+      const card = document.createElement('div');
+      card.className = 'product-card reveal' + (i > 0 && i < 4 ? ' reveal-delay-' + i : '');
+      card.setAttribute('data-id', product.id);
+      card.innerHTML =
+        '<img src="' + product.image + '" alt="' + product.name + '">' +
+        '<div class="product-info">' +
+          '<div class="product-title">' + product.name + '</div>' +
+          '<div class="product-price">\u20B9' + product.price.toLocaleString('en-IN') + '</div>' +
+        '</div>';
+      card.addEventListener('click', function () { openProductModal(product.id); });
+      productsGrid.appendChild(card);
+    });
+
+    // Let the reveal observer pick up the freshly-added cards
+    document.querySelectorAll('.product-card.reveal').forEach(function (el) {
+      shirishaRevealObserver.observe(el);
+    });
+  })
+  .catch(function (err) {
+    productsGrid.innerHTML = '<div class="products-status">Could not load products right now.</div>';
+    console.error(err);
+  });
+
+function openProductModal(id) {
+  const product = PRODUCTS_BY_ID[id];
+  if (!product) return;
+
+  document.getElementById('productModalImage').src = product.image;
+  document.getElementById('productModalImage').alt = product.name;
+  document.getElementById('productModalName').textContent = product.name;
+  document.getElementById('productModalPrice').textContent = '\u20B9' + product.price.toLocaleString('en-IN');
+  document.getElementById('productModalDescription').textContent = product.description;
+
+  const message = 'Hi, I am interested in ' + product.name + ' (\u20B9' + product.price.toLocaleString('en-IN') + ')';
+  document.getElementById('productModalBuyBtn').href =
+    'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
+
+  openModal('productDetailModal');
+}
+
+</script>
+</body>
+</html>

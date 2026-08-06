@@ -1,0 +1,66 @@
+[
+  {
+    "id": "sandalwood-bliss",
+    "name": "Sandalwood Bliss",
+    "price": 249,
+    "category": "organic",
+    "image": "https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg",
+    "description": "A warm, woody fragrance rolled by hand from pure sandalwood paste. Slow-burning and smooth, it fills the room with a calm, grounding aroma perfect for daily rituals and meditation."
+  },
+  {
+    "id": "rose-attar",
+    "name": "Rose Attar",
+    "price": 279,
+    "category": "organic",
+    "image": "https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg",
+    "description": "Delicate and floral, made with real rose extracts sourced from small organic farms. A soft, romantic scent that lingers gently without ever feeling overpowering."
+  },
+  {
+    "id": "jasmine-nights",
+    "name": "Jasmine Nights",
+    "price": 259,
+    "category": "organic",
+    "image": "https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg",
+    "description": "Sweet and heady jasmine, hand-rolled in small batches. Best lit in the evening, its rich floral notes create a warm, inviting atmosphere for quiet nights in."
+  },
+  {
+    "id": "musk-amber",
+    "name": "Musk & Amber",
+    "price": 299,
+    "category": "organic",
+    "image": "https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg",
+    "description": "A deep, resinous blend of natural musk and amber resin. Earthy and long-lasting, this is our most robust organic scent — ideal for larger spaces."
+  },
+  {
+    "id": "ocean-breeze",
+    "name": "Ocean Breeze",
+    "price": 199,
+    "category": "eco",
+    "image": "https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg",
+    "description": "A crisp, airy fragrance formulated with minimal synthetic compounds for a clean, fresh scent that clears a room in minutes. Long-lasting throw, everyday use."
+  },
+  {
+    "id": "citrus-burst",
+    "name": "Citrus Burst",
+    "price": 189,
+    "category": "eco",
+    "image": "https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg",
+    "description": "Bright, zesty, and energising. A responsibly formulated citrus blend designed to lift the mood of any space without overwhelming the senses."
+  },
+  {
+    "id": "vanilla-musk",
+    "name": "Vanilla Musk",
+    "price": 219,
+    "category": "eco",
+    "image": "https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg",
+    "description": "A cosy, comforting blend balancing sweet vanilla with soft musk. Formulated to be gentle yet long-lasting, ideal for everyday spaces."
+  },
+  {
+    "id": "lavender-dream",
+    "name": "Lavender Dream",
+    "price": 209,
+    "category": "eco",
+    "image": "https://www.pitambari.com/shop/wp-content/uploads/2025/01/Devbhakti-Champa-Agarbatti-80-gm.jpg",
+    "description": "Calming lavender notes formulated for consistent, long-lasting fragrance. A soothing choice for winding down at the end of the day."
+  }
+]
