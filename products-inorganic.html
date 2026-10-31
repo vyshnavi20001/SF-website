@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eco Collection — Shirisha Fragrance & Co.</title>
+<title>Fragrance Collection — Shirisha Fragrance & Co.</title>
 <style>
 * {
   margin: 0;
@@ -273,24 +273,41 @@ body {
 
 .product-card img {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  background: #ECE8E0;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  padding: 14px;
+  background: #F7F3ED;
 }
 
 .product-info { padding: 16px 18px 20px; }
+
+.product-profile {
+  color: #BEA165;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.product-description {
+  color: #4A4A4A;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.product-card-hint {
+  color: #2C4638;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 12px;
+}
 
 .product-title {
   font-size: 17px;
   font-weight: 700;
   color: #1A1A1A;
   margin-bottom: 6px;
-}
-
-.product-price {
-  font-size: 17px;
-  font-weight: 800;
-  color: #1E3730;
 }
 
 @media (max-width: 600px) {
@@ -422,10 +439,6 @@ body {
   cursor: pointer;
 }
 
-.product-price {
-  margin-top: 2px;
-}
-
 .products-status {
   text-align: center;
   font-size: 15px;
@@ -437,18 +450,20 @@ body {
 
 /* ===== PRODUCT DETAIL MODAL ===== */
 .product-modal-box {
-  max-width: 420px;
+  max-width: 520px;
+  max-height: 90vh;
   padding: 0 0 28px;
-  overflow: hidden;
+  overflow-y: auto;
   text-align: left;
 }
 
 .product-modal-image {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  height: 190px;
+  object-fit: contain;
   display: block;
-  background: #ECE8E0;
+  padding: 14px;
+  background: #F7F3ED;
 }
 
 .product-modal-body {
@@ -464,12 +479,36 @@ body {
   text-align: left;
 }
 
-.product-modal-price {
-  font-size: 19px;
-  font-weight: 800;
+.product-modal-profile {
   color: #BEA165;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
   margin-bottom: 14px;
+  text-transform: uppercase;
 }
+
+.product-modal-details {
+  border-top: 1px solid #E7E0D4;
+  padding-top: 16px;
+  margin-top: 4px;
+}
+
+.product-modal-details h4 {
+  color: #1E3730;
+  font-size: 14px;
+  margin: 14px 0 6px;
+}
+
+.product-modal-details p,
+.product-modal-details li {
+  color: #4A4A4A;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.product-modal-details p { margin-bottom: 8px; }
+.product-modal-details ul { padding-left: 20px; margin-bottom: 10px; }
 
 .product-modal-body p {
   font-size: 15px;
@@ -503,9 +542,9 @@ body {
 </nav>
 
 <section class="products-page">
-  <span class="products-eyebrow reveal in-view">Eco-Conscious</span>
-  <h2 class="products-title reveal in-view">Eco Collection</h2>
-  <p class="products-subtitle reveal in-view">Our Eco Collection is thoughtfully formulated using minimal synthetic ingredients while preserving a rich and long-lasting fragrance experience. Designed for everyday use, it offers the perfect balance of quality, performance, and environmental consciousness.</p>
+  <span class="products-eyebrow reveal in-view">Signature Fragrances</span>
+  <h2 class="products-title reveal in-view">Fragrance Collection</h2>
+  <p class="products-subtitle reveal in-view">Explore traditional, floral, woody and resinous fragrances for prayer, home and everyday moments.</p>
 
   <div class="products-grid" id="productsGrid">
     <div class="products-status">Loading products&hellip;</div>
@@ -518,11 +557,12 @@ body {
     <img class="product-modal-image" id="productModalImage" src="" alt="">
     <div class="product-modal-body">
       <h3 id="productModalName"></h3>
-      <div class="product-modal-price" id="productModalPrice"></div>
+      <div class="product-modal-profile" id="productModalProfile"></div>
       <p id="productModalDescription"></p>
+      <div class="product-modal-details" id="productModalDetails"></div>
       <div class="modal-actions">
         <a class="contact-option whatsapp" id="productModalBuyBtn" href="#" target="_blank" rel="noopener">
-          Buy on WhatsApp
+          Enquire on WhatsApp
         </a>
       </div>
       <button class="modal-close" onclick="closeModal('productDetailModal')">Close</button>
@@ -537,7 +577,7 @@ body {
     <p>Choose a category to continue</p>
     <div class="modal-actions">
       <a class="contact-option organic" href="products-organic.html">Organic Collection</a>
-      <a class="contact-option inorganic" href="products-inorganic.html">Eco Collection</a>
+      <a class="contact-option inorganic" href="products-inorganic.html">Fragrance Collection</a>
     </div>
     <button class="modal-close" onclick="closeModal('productsModal')">Close</button>
   </div>
@@ -589,7 +629,7 @@ document.querySelectorAll('.reveal').forEach(el => shirishaRevealObserver.observ
 
 
 // ===== Product loading & detail dialog =====
-const PRODUCT_CATEGORY = 'eco';
+const PRODUCT_CATEGORY = 'signature';
 const WHATSAPP_NUMBER = '919999999999';
 
 const productsGrid = document.getElementById('productsGrid');
@@ -615,13 +655,36 @@ fetch('products.json')
       const card = document.createElement('div');
       card.className = 'product-card reveal' + (i > 0 && i < 4 ? ' reveal-delay-' + i : '');
       card.setAttribute('data-id', product.id);
-      card.innerHTML =
-        '<img src="' + product.image + '" alt="' + product.name + '">' +
-        '<div class="product-info">' +
-          '<div class="product-title">' + product.name + '</div>' +
-          '<div class="product-price">\u20B9' + product.price.toLocaleString('en-IN') + '</div>' +
-        '</div>';
+      const image = document.createElement('img');
+      image.src = product.image;
+      image.alt = product.name + ' product packaging';
+      image.loading = 'lazy';
+
+      const info = document.createElement('div');
+      info.className = 'product-info';
+      const profile = document.createElement('div');
+      profile.className = 'product-profile';
+      profile.textContent = product.profile.join(' · ');
+      const name = document.createElement('div');
+      name.className = 'product-title';
+      name.textContent = product.name;
+      const description = document.createElement('p');
+      description.className = 'product-description';
+      description.textContent = product.description;
+      const hint = document.createElement('div');
+      hint.className = 'product-card-hint';
+      hint.textContent = 'Know more →';
+      info.append(profile, name, description, hint);
+      card.append(image, info);
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
       card.addEventListener('click', function () { openProductModal(product.id); });
+      card.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openProductModal(product.id);
+        }
+      });
       productsGrid.appendChild(card);
     });
 
@@ -642,10 +705,36 @@ function openProductModal(id) {
   document.getElementById('productModalImage').src = product.image;
   document.getElementById('productModalImage').alt = product.name;
   document.getElementById('productModalName').textContent = product.name;
-  document.getElementById('productModalPrice').textContent = '\u20B9' + product.price.toLocaleString('en-IN');
+  document.getElementById('productModalProfile').textContent = product.profile.join(' · ');
   document.getElementById('productModalDescription').textContent = product.description;
 
-  const message = 'Hi, I am interested in ' + product.name + ' (\u20B9' + product.price.toLocaleString('en-IN') + ')';
+  const details = document.getElementById('productModalDetails');
+  details.replaceChildren();
+  function addParagraph(title, text) {
+    const heading = document.createElement('h4');
+    heading.textContent = title;
+    const paragraph = document.createElement('p');
+    paragraph.textContent = text;
+    details.append(heading, paragraph);
+  }
+  function addList(title, items) {
+    const heading = document.createElement('h4');
+    heading.textContent = title;
+    const list = document.createElement('ul');
+    items.forEach(function (item) {
+      const row = document.createElement('li');
+      row.textContent = item;
+      list.appendChild(row);
+    });
+    details.append(heading, list);
+  }
+  addParagraph('Meaning', product.meaning);
+  addParagraph('About the fragrance', product.about);
+  addList('Suggested uses', product.uses);
+  addList('Fragrance experience', product.aromaBenefits);
+  addList('Best for', product.bestFor);
+
+  const message = 'Hi, I am interested in ' + product.name + '. Please share the price and pack size.';
   document.getElementById('productModalBuyBtn').href =
     'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
 
